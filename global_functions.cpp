@@ -1797,8 +1797,7 @@ T barycentric(const T& v1, const T& v2, const T& v3, const Vector2d& uv)
 {
 	return uv.x() * v1 + uv.y() * v2 + (1 - uv.x() - uv.y()) * v3;
 }
-template <typename T>
-bool num_equal(const T& x, const T& y, const double &precision) {
+bool num_equal(const double& x, const double& y, const double &precision) {
 	return std::abs(x - y) <= (std::max)(precision, precision * (std::max)(std::abs(x), std::abs(y)));
 }
 

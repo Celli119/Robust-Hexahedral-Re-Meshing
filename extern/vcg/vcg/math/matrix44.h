@@ -200,10 +200,10 @@ public:
     Matrix44 transpose() const
     {
         Matrix44 res = *this;
-        Transpose(res);
+        this->Transpose(res);
         return res;
     }
-    void transposeInPlace() { Transpose(*this); }
+    void transposeInPlace() { this->Transpose(*this); }
 
     void print() {
         unsigned int i, j, p;

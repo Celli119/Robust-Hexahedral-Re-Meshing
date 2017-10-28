@@ -46,8 +46,8 @@ template <typename T>
 T bilinear(const T& v1, const T& v2, const T& v3, const T& v4, const Vector2d& uv);
 template <typename T>
 T barycentric(const T& v1, const T& v2, const T& v3, const Vector2d& uv);
-template <typename T>
-bool num_equal(const T& v1, const T& v2, const double &precision);
+
+bool num_equal(const double& x, const double& y, const double &precision);
 
 Float rescale(Mesh &mesh, Float scaleI, bool inverse);
 void compute_referenceMesh(MatrixXd &V, vector<Hybrid> &H, vector<uint32_t> &Hs, vector<MatrixXd> &Vout);

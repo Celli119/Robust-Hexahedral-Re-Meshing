@@ -23,6 +23,7 @@ option(LIBIGL_WITH_NANOGUI     "Use Nanogui menu"   ON)
 option(LIBIGL_WITH_VIEWER      "Use OpenGL viewer"  ON)
 option(LIBIGL_WITH_OPENGL      "Use OpenGL"         ON)
 option(LIBIGL_WITH_GLFW        "Use GLFW"           ON)
+option(LIBIGL_WITH_OPENGL_GLFW "Use OpenFL & GLFW"  ON)
 option(LIBIGL_WITH_BBW         "Use BBW"            OFF)
 option(LIBIGL_WITH_EMBREE      "Use Embree"         ON)
 option(LIBIGL_WITH_PNG         "Use PNG"            ON)
@@ -34,6 +35,11 @@ option(LIBIGL_WITH_COMISO      "Use CoMiso"         OFF)
 option(LIBIGL_WITH_MATLAB      "Use Matlab"         OFF) # This option is not supported yet
 option(LIBIGL_WITH_MOSEK       "Use MOSEK"          OFF) # This option is not supported yet
 option(LIBIGL_WITH_CGAL        "Use CGAL"           OFF)
+if (LIBIGL_WITH_VIEWER)
+  #LIBIGL_WITH_VIEWER=ON requires LIBIGL_WITH_OPENGL_GLFW=ON and LIBIGL_WITH_OPENGL=ON
+  set(LIBIGL_WITH_OPENGL                                   ON)
+  set(LIBIGL_WITH_OPENGL_GLFW                          ON)
+endif()
 if(LIBIGL_WITH_CGAL) # Do not remove or move this block, the cgal build system fails without it
   find_package(CGAL REQUIRED)
   set(CGAL_DONT_OVERRIDE_CMAKE_FLAGS TRUE CACHE BOOL "CGAL's CMAKE Setup is super annoying ")

@@ -194,7 +194,7 @@ struct Frame_H
 
 enum Sheet_type {
 	open = 0,
-	close,
+	closeSheet,
 	tagent,
 	intersect,
 	mobius

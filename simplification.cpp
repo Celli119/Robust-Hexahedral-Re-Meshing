@@ -154,7 +154,7 @@ bool simplification::build_sheet_info(uint32_t sheet_id){
 
 		if (frame.FEs[eid].boundary) middle_es_b.push_back(eid);
 	}
-	if(!middle_es_b.size()) All_Sheets[sheet_id].type = Sheet_type::close;
+	if(!middle_es_b.size()) All_Sheets[sheet_id].type = Sheet_type::closeSheet;
 	vector<short> V_flag(frame.FVs.size(), 0);
 	for (auto eid : middle_es) {
 		uint32_t v1 = frame.FEs[eid].vs[0];
@@ -272,7 +272,7 @@ CHord simplification::extract_chord(uint32_t &fid, vector<bool> &f_flag) {
 		cur_h = neighbor_h;
 
 		if (find(fs.begin(),fs.end(), cur_f) != fs.end()){
-			cc.type = Sheet_type::close;
+			cc.type = Sheet_type::closeSheet;
 			break;
 		}
 		fs.push_back(cur_f);
@@ -280,7 +280,7 @@ CHord simplification::extract_chord(uint32_t &fid, vector<bool> &f_flag) {
 	}
 
 	cur_f = fid;
-	if (cc.type != Sheet_type::close && frame.FFs[cur_f].neighbor_fhs.size() > 1) {
+	if (cc.type != Sheet_type::closeSheet && frame.FFs[cur_f].neighbor_fhs.size() > 1) {
 		cur_h = frame.FFs[cur_f].neighbor_fhs[1];
 
 		while (true) {
@@ -331,7 +331,7 @@ CHord simplification::extract_chord(uint32_t &fid, vector<bool> &f_flag) {
 			frame.FFs[cc.parallel_fs[i]].neighbor_fhs.begin(), frame.FFs[cc.parallel_fs[i]].neighbor_fhs.end(), 
 			back_inserter(sharedhs));
 		cc.cs.push_back(sharedhs[0]);
-		if (cc.type == Sheet_type::close && i == cc.parallel_fs.size() - 1){
+		if (cc.type == Sheet_type::closeSheet && i == cc.parallel_fs.size() - 1){
 			sharedhs.clear();
 			set_intersection(frame.FFs[cc.parallel_fs[0]].neighbor_fhs.begin(), frame.FFs[cc.parallel_fs[0]].neighbor_fhs.end(),
 				frame.FFs[cc.parallel_fs[i]].neighbor_fhs.begin(), frame.FFs[cc.parallel_fs[i]].neighbor_fhs.end(),
@@ -385,7 +385,7 @@ bool simplification::build_chord_info(uint32_t id) {
 			uint32_t v0 = cc.parallel_ns[i][j], v1 = cc.parallel_ns[(i + 1) % 4][j];
 			
 			int fid;
-			if (cc.type == Sheet_type::close && j == cc.parallel_fs.size() - 1) 
+			if (cc.type == Sheet_type::closeSheet && j == cc.parallel_fs.size() - 1)
 				fid = cc.parallel_fs[0];
 			else fid = cc.parallel_fs[j];
 			for(uint32_t k=0;k<4;k++)
@@ -422,7 +422,7 @@ bool simplification::build_chord_info(uint32_t id) {
 						break;
 					}
 			}
-			if (cc.type == Sheet_type::close && j == cc.parallel_ns[i].size() - 1) {
+			if (cc.type == Sheet_type::closeSheet && j == cc.parallel_ns[i].size() - 1) {
 				vector<uint32_t> vs;
 				vs.push_back(cc.parallel_ns[i][j]);
 				vs.push_back(cc.parallel_ns[(i + 1) % 4][j]);
@@ -835,7 +835,7 @@ bool simplification::filter_topology_feature(Tuple_Candidate &c) {
 		}
 	}
 	else if (get<1>(c) == Base_Set::CHORD) {
-		if (All_Chords[id].type != Sheet_type::close && All_Chords[id].type != Sheet_type::open) return false;
+		if (All_Chords[id].type != Sheet_type::closeSheet && All_Chords[id].type != Sheet_type::open) return false;
 		if (All_Chords[id].valence_filter || All_Chords[id].weight_val_min < 3.0 || All_Chords[id].weight_val_max > 5.0) return false;
 
 		if (All_Chords[id].fake ) {
@@ -1249,7 +1249,7 @@ bool simplification::vs_group_chord(uint32_t chord_id) {
 				sheet_id = sheet.id; break;
 			}
 		if (sheet_id == -1) { cout << "doesnot find the longer sheet" << endl; system("PAUSE"); }
-		if (All_Sheets[sheet_id].type != Sheet_type::close && All_Sheets[sheet_id].type != Sheet_type::open) {
+		if (All_Sheets[sheet_id].type != Sheet_type::closeSheet && All_Sheets[sheet_id].type != Sheet_type::open) {
 			return false;
 		}
 		//sheet v_group 
