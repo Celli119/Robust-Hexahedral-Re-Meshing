@@ -1,0 +1,3 @@
+[submodule "extern/libigl"]
+	path = extern/libigl
+	url = https://github.com/Celli119/libigl.git
